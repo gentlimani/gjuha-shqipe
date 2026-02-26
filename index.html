@@ -35,6 +35,7 @@
     button:active { transform: scale(0.97); }
     .btn-primary { background-color: #0288d1; color: white; }
     .btn-secondary { background-color: #ff9800; border-color: #ff9800; color: white; }
+    .btn-advanced { background-color: #9c27b0; border-color: #9c27b0; color: white; }
     .btn-back { background-color: #e0e0e0; border-color: #e0e0e0; color: #333; margin-top: 20px; }
     
     /* Quiz Options */
@@ -50,6 +51,24 @@
     .lesson-card h3 { margin-top: 0; color: #01579b; font-size: 22px; }
     .lesson-card p { font-size: 20px; margin-bottom: 0; }
 
+    /* Advanced Test Styles */
+    .advanced-section {
+      background: #f3e5f5; padding: 20px; border-radius: 12px;
+      margin-bottom: 25px; text-align: left; border-left: 6px solid #9c27b0;
+    }
+    .advanced-section h3 { color: #6a1b9a; font-size: 20px; margin-top: 0; }
+    .text-box { background: #fff; padding: 15px; border-radius: 8px; font-size: 22px; color: #000; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+    .adv-row { margin-bottom: 15px; background: rgba(255,255,255,0.6); padding: 15px; border-radius: 8px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .adv-row label { font-weight: bold; font-size: 18px; width: 100%; margin-bottom: 5px; color: #333; }
+    
+    input[type="text"], select {
+      padding: 15px; font-size: 18px; border: 2px solid #ce93d8; border-radius: 10px;
+      flex: 1; min-width: 140px; font-family: inherit;
+    }
+    input[type="text"]:focus, select:focus { outline: none; border-color: #9c27b0; box-shadow: 0 0 8px rgba(156,39,176,0.3); }
+    .open-input { width: 100%; margin-bottom: 15px; display: block; }
+    .hint { font-size: 15px; color: #666; font-style: italic; margin-bottom: 10px; display: block; }
+
     #progress { color: #757575; font-size: 18px; margin-bottom: 15px; font-weight: bold; }
     .question { font-size: 26px; margin-bottom: 30px; color: #222; font-weight: bold; }
     
@@ -64,7 +83,7 @@
   
   <div id="screen-home" class="screen active">
     <h1>Përshëndetje, Noar! 👋</h1>
-    <p>Mirë se erdhe! Këtu mund të mësosh dhe të ushtrosh gramatikën e Gjuhës Shqipe për klasën e 3-të.</p>
+    <p>Mirë se erdhe në aplikacionin e Gjuhës Shqipe.</p>
     <br>
     <button class="btn-primary" onclick="showScreen('screen-lessons')">📖 Lexo Mësimet</button>
     <button class="btn-secondary" onclick="showScreen('screen-tests')">✍️ Fillo Testet</button>
@@ -74,20 +93,19 @@
     <h2>Mësimet e Gramatikës</h2>
     <div id="lessons-container">
       <div class="lesson-card">
-        <h3>1. Emri</h3>
-        <p>Fjala që tregon njerëz, kafshë, sende, vende ose ndjenja quhet <b>EMËR</b>.<br><i>Shembuj:</i> djali, macja, lapsi, qyteti, gëzimi.</p>
+        <h3>1. Emri Konkret dhe Abstrakt</h3>
+        <p><b>Konkret:</b> Mund ta shohim dhe ta prekim (Tavolina, Lapsi, Molla).<br>
+        <b>Abstrakt:</b> Nuk e prekim dot, tregon ndjenja ose mendime (Gëzimi, Frika, Dashuria).</p>
       </div>
       <div class="lesson-card">
-        <h3>2. Mbiemri</h3>
-        <p>Fjala që tregon një cilësi (si është) të emrit quhet <b>MBIEMËR</b>.<br><i>Shembuj:</i> djalë <b>i mirë</b>, mollë <b>e kuqe</b>, qiell <b>i kaltër</b>.</p>
+        <h3>2. Gjinia e Emrit</h3>
+        <p><b>Mashkullore:</b> mbarojnë me <b>-i</b> ose <b>-u</b> (Gjyshi, Zogu).<br>
+        <b>Femërore:</b> mbarojnë me <b>-a</b> ose <b>-ja</b> (Gjyshja, Vajza).</p>
       </div>
       <div class="lesson-card">
-        <h3>3. Gjinia e Emrit</h3>
-        <p>Emrat kanë dy gjini kryesore:<br><b>Mashkullore:</b> mbarojnë me <b>-i</b> ose <b>-u</b> (lapsi, djaloshi, zogu).<br><b>Femërore:</b> mbarojnë me <b>-a</b> ose <b>-ja</b> (vajza, lulja, fletorja).</p>
-      </div>
-      <div class="lesson-card">
-        <h3>4. Numri i Emrit</h3>
-        <p><b>Njëjës:</b> tregon vetëm një (një laps, një lule).<br><b>Shumës:</b> tregon dy ose më shumë (disa lapsa, disa lule).</p>
+        <h3>3. Numri i Emrit</h3>
+        <p><b>Njëjës:</b> tregon vetëm një (Libri).<br>
+        <b>Shumës:</b> tregon dy ose më shumë (Librat).</p>
       </div>
     </div>
     <button class="btn-back" onclick="showScreen('screen-home')">⬅ Kthehu në Ballinë</button>
@@ -95,8 +113,67 @@
 
   <div id="screen-tests" class="screen">
     <h2>Zgjidh një Test</h2>
+    <button class="btn-advanced" onclick="showScreen('screen-advanced')">🌟 Testi i Avancuar (Me Shkrim) 🌟</button>
+    <hr style="margin: 20px 0; border: 1px solid #eee;">
     <div id="test-buttons-container"></div>
     <button class="btn-back" onclick="showScreen('screen-home')">⬅ Kthehu në Ballinë</button>
+  </div>
+
+  <div id="screen-advanced" class="screen">
+    <h2>Testi i Avancuar</h2>
+    <p>Përdor lapsin tënd (Apple Pencil) për të shkruar në kutitë e bardha ose zgjidh opsionin e saktë!</p>
+
+    <div class="advanced-section">
+      <h3>1. Lexo tekstin dhe kthe emrat.</h3>
+      <p class="text-box">"<b>Mësuesi</b> i lavdëroi nxënësit. Ai foli edhe me <b>gjyshin</b> e njërit prej tyre."</p>
+      
+      <div class="adv-row">
+        <label>Fjala "Mësuesi":</label>
+        <select id="adv-q1-num"><option value="">--Numri--</option><option value="Njëjës">Njëjës</option><option value="Shumës">Shumës</option></select>
+        <select id="adv-q1-gjin"><option value="">--Gjinia--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+        <input type="text" id="adv-q1-kthe" placeholder="Ktheje në Femërore...">
+      </div>
+
+      <div class="adv-row">
+        <label>Fjala "Gjyshin" (Gjyshi):</label>
+        <select id="adv-q2-num"><option value="">--Numri--</option><option value="Njëjës">Njëjës</option><option value="Shumës">Shumës</option></select>
+        <select id="adv-q2-gjin"><option value="">--Gjinia--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+        <input type="text" id="adv-q2-kthe" placeholder="Ktheje në Femërore...">
+      </div>
+    </div>
+
+    <div class="advanced-section">
+      <h3>2. Shkruaj shumësin dhe trego gjininë.</h3>
+      <div class="adv-row">
+        <label>Fjala: Libri</label>
+        <input type="text" id="adv-q3-shumes" placeholder="Shkruaj shumësin...">
+        <select id="adv-q3-gjin"><option value="">--Gjinia në njëjës--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+      </div>
+      <div class="adv-row">
+        <label>Fjala: Lulja</label>
+        <input type="text" id="adv-q4-shumes" placeholder="Shkruaj shumësin...">
+        <select id="adv-q4-gjin"><option value="">--Gjinia në njëjës--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+      </div>
+    </div>
+
+    <div class="advanced-section">
+      <h3>3. Emrat Konkretë</h3>
+      <span class="hint">Shkruaj 3 emra që mund t'i shohësh dhe t'i prekësh (psh. dera, lapsi).</span>
+      <input type="text" class="open-input" placeholder="1. Emër konkret">
+      <input type="text" class="open-input" placeholder="2. Emër konkret">
+      <input type="text" class="open-input" placeholder="3. Emër konkret">
+    </div>
+
+    <div class="advanced-section">
+      <h3>4. Emrat Abstraktë</h3>
+      <span class="hint">Shkruaj 3 emra që tregojnë ndjenja ose ide (psh. gëzimi, frika).</span>
+      <input type="text" class="open-input" placeholder="1. Emër abstrakt">
+      <input type="text" class="open-input" placeholder="2. Emër abstrakt">
+      <input type="text" class="open-input" placeholder="3. Emër abstrakt">
+    </div>
+
+    <button class="btn-advanced" onclick="checkAdvancedTest()">KONTROLLO TESTIN</button>
+    <button class="btn-back" onclick="showScreen('screen-tests')">⬅ Kthehu mbrapa</button>
   </div>
 
   <div id="screen-quiz" class="screen">
@@ -111,7 +188,7 @@
   <div id="screen-score" class="screen">
     <h2>Testi Përfundoi!</h2>
     <h1 id="score-text" style="font-size: 48px; margin: 20px 0;"></h1>
-    <p id="score-message" style="font-size: 24px; font-weight: bold;"></p>
+    <p id="score-message" style="font-size: 20px; font-weight: normal; line-height: 1.6;"></p>
     <br>
     <button class="btn-primary" onclick="showScreen('screen-tests')">Zgjidh një Test Tjetër</button>
     <button class="btn-back" onclick="showScreen('screen-home')">Kthehu në Ballinë</button>
@@ -120,167 +197,10 @@
 </div>
 
 <script>
-  // Test Data
+  // Regular Tests Data
   const testsData = [
     {
       name: "Testi 1: Çfarë është Emri?",
       questions: [
         { q: "Cila fjalë tregon NJERI?", options: ["Lapsi", "Mësuesja", "Tavolina"], a: "Mësuesja" },
         { q: "Cila fjalë tregon KAFSHË?", options: ["Shtëpia", "Macja", "Gëzimi"], a: "Macja" },
-        { q: "Si shkruhet emri i një qyteti (Emër i Përveçëm)?", options: ["prishtina", "Prishtina", "PRISHTiNa"], a: "Prishtina" },
-        { q: "Cili grup ka vetëm EMRA?", options: ["lapsi, djali, mali", "këndoj, luaj, qesh", "i mirë, e bukur"], a: "lapsi, djali, mali" },
-        { q: "Fjala që tregon një SEND është:", options: ["Këndoj", "Libri", "I shpejtë"], a: "Libri" }
-      ]
-    },
-    {
-      name: "Testi 2: Gjej Mbiemrin",
-      questions: [
-        { q: "Cila fjalë tregon një CILËSI (Mbiemër)?", options: ["Libri", "Lexoj", "I mençur"], a: "I mençur" },
-        { q: "Gjej mbiemrin në fjalinë: 'Qielli është i kaltër.'", options: ["Qielli", "është", "i kaltër"], a: "i kaltër" },
-        { q: "Zgjidh mbiemrin e duhur: 'Mollë ______'", options: ["e kuqe", "i kuq", "të kuqe"], a: "e kuqe" },
-        { q: "Zgjidh mbiemrin e duhur: 'Djalë ______'", options: ["e zgjuar", "i zgjuar", "të zgjuar"], a: "i zgjuar" },
-        { q: "Cila nga këto fjalë NUK është mbiemër?", options: ["I ngadalshëm", "I lartë", "Vrapoj"], a: "Vrapoj" }
-      ]
-    },
-    {
-      name: "Testi 3: Gjinia Mashkullore dhe Femërore",
-      questions: [
-        { q: "Emri 'Lapsi' është në gjininë:", options: ["Mashkullore", "Femërore"], a: "Mashkullore" },
-        { q: "Emri 'Vajza' është në gjininë:", options: ["Mashkullore", "Femërore"], a: "Femërore" },
-        { q: "Cili nga këta emra është në gjininë FEMËRORE?", options: ["Miku", "Lulja", "Zogu"], a: "Lulja" },
-        { q: "Cili nga këta emra është në gjininë MASHKULLORE?", options: ["Fletorja", "Mami", "Gjyshi"], a: "Gjyshi" },
-        { q: "Si bën në gjininë femërore emri 'Mësuesi'?", options: ["Mësuesit", "Mësuesja", "Mësueseve"], a: "Mësuesja" }
-      ]
-    },
-    {
-      name: "Testi 4: Numri Njëjës dhe Shumës",
-      questions: [
-        { q: "Emri 'Librat' është në numrin:", options: ["Njëjës", "Shumës"], a: "Shumës" },
-        { q: "Cili emër tregon VETËM NJË (Njëjës)?", options: ["Lapsat", "Djemtë", "Lulja"], a: "Lulja" },
-        { q: "Si bën në shumës emri 'Vajza'?", options: ["Vajzat", "Vajzës", "Vajzë"], a: "Vajzat" },
-        { q: "Cili grup ka fjalë vetëm në numrin SHUMËS?", options: ["Libri, lapsi", "Librat, lapsat", "Libri, lapsat"], a: "Librat, lapsat" },
-        { q: "Numri Njëjës i fjalës 'Zogjtë' është:", options: ["Zog", "Zogu", "Zogut"], a: "Zogu" }
-      ]
-    },
-    {
-      name: "Testi 5: Antonimet dhe Sinonimet",
-      questions: [
-        { q: "Cili është ANTONIMI (e kundërta) e fjalës 'I ngadalshëm'?", options: ["I keq", "I shpejtë", "I vogël"], a: "I shpejtë" },
-        { q: "Antonimi i fjalës 'Natë' është:", options: ["Errësirë", "Hënë", "Ditë"], a: "Ditë" },
-        { q: "Cili është SINONIMI (kuptim i njëjtë) për fjalën 'Shikoj'?", options: ["Flas", "Eci", "Vështroj"], a: "Vështroj" },
-        { q: "Antonimi i fjalës 'I ftohtë' është:", options: ["I akullt", "I ngrohtë", "I bardhë"], a: "I ngrohtë" },
-        { q: "Sinonimi për fjalën 'Çun' është:", options: ["Burrë", "Djalë", "Vajzë"], a: "Djalë" }
-      ]
-    },
-    {
-      name: "Testi 6: Sfida e Mjeshtrit (Përzier)",
-      questions: [
-        { q: "Cili është emër i PËRVEÇËM?", options: ["qyteti", "Kosova", "vendi"], a: "Kosova" },
-        { q: "Në fjalinë 'Vajza e zgjuar lexon.', cila fjalë është MBIEMRI?", options: ["Vajza", "lexon", "e zgjuar"], a: "e zgjuar" },
-        { q: "Emri 'Fluturat' është në gjininë dhe numrin:", options: ["Femërore, Shumës", "Mashkullore, Njëjës", "Femërore, Njëjës"], a: "Femërore, Shumës" },
-        { q: "Cili nga këta është MBIEMËR i panyjshëm?", options: ["trim", "i mirë", "e zgjuar"], a: "trim" },
-        { q: "Si shkruhet saktë fjalia e mëposhtme?", options: ["noari lexon librin.", "Noari lexon librin.", "Noari Lexon Librin."], a: "Noari lexon librin." }
-      ]
-    }
-  ];
-
-  // App State
-  let activeTestIndex = 0;
-  let currentQuestionIndex = 0;
-  let score = 0;
-
-  // Initialize Tests Menu
-  const testMenuContainer = document.getElementById('test-buttons-container');
-  testsData.forEach((test, index) => {
-    const btn = document.createElement('button');
-    btn.innerText = test.name;
-    btn.onclick = () => startTest(index);
-    testMenuContainer.appendChild(btn);
-  });
-
-  // Screen Navigation
-  function showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(screenId).classList.add('active');
-  }
-
-  function startTest(index) {
-    activeTestIndex = index;
-    currentQuestionIndex = 0;
-    score = 0;
-    document.getElementById('quiz-title').innerText = testsData[index].name;
-    showScreen('screen-quiz');
-    loadQuestion();
-  }
-
-  function loadQuestion() {
-    const nextBtn = document.getElementById('next-btn');
-    nextBtn.style.display = 'none';
-    
-    const test = testsData[activeTestIndex];
-    const currentQ = test.questions[currentQuestionIndex];
-    
-    document.getElementById('progress').innerText = `Pyetja ${currentQuestionIndex + 1} nga ${test.questions.length}`;
-    document.getElementById('question').innerText = currentQ.q;
-    
-    const optionsEl = document.getElementById('options');
-    optionsEl.innerHTML = '';
-    
-    currentQ.options.forEach(option => {
-      const btn = document.createElement('button');
-      btn.innerText = option;
-      btn.onclick = () => selectAnswer(btn, option, currentQ.a);
-      optionsEl.appendChild(btn);
-    });
-  }
-
-  function selectAnswer(selectedBtn, selectedText, correctText) {
-    // Disable all buttons to prevent multiple taps
-    const allBtns = document.getElementById('options').querySelectorAll('button');
-    allBtns.forEach(btn => btn.disabled = true);
-
-    if (selectedText === correctText) {
-      selectedBtn.classList.add('correct');
-      score++;
-    } else {
-      selectedBtn.classList.add('wrong');
-      // Show correct answer automatically
-      allBtns.forEach(btn => {
-        if (btn.innerText === correctText) btn.classList.add('correct');
-      });
-    }
-    document.getElementById('next-btn').style.display = 'block';
-  }
-
-  function nextQuestion() {
-    const test = testsData[activeTestIndex];
-    currentQuestionIndex++;
-    
-    if (currentQuestionIndex < test.questions.length) {
-      loadQuestion();
-    } else {
-      showFinalScore();
-    }
-  }
-
-  function showFinalScore() {
-    const test = testsData[activeTestIndex];
-    document.getElementById('score-text').innerText = `${score} / ${test.questions.length}`;
-    
-    const msgEl = document.getElementById('score-message');
-    if(score === test.questions.length) {
-      msgEl.innerText = "Të lumtë Noar! Je i shkëlqyer! 🌟🏆";
-      msgEl.style.color = "#4caf50";
-    } else if(score >= test.questions.length - 2) {
-      msgEl.innerText = "Shumë mirë! Rezultat mjaft i mirë! 👍";
-      msgEl.style.color = "#ff9800";
-    } else {
-      msgEl.innerText = "Mos u dorëzo! Lexo mësimet dhe provoje përsëri! 💪";
-      msgEl.style.color = "#f44336";
-    }
-    
-    showScreen('screen-score');
-  }
-</script>
-</body>
-</html>
