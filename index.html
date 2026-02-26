@@ -121,7 +121,7 @@
 
   <div id="screen-advanced" class="screen">
     <h2>Testi i Avancuar</h2>
-    <p>Përdor lapsin tënd (Apple Pencil) për të shkruar në kutitë e bardha ose zgjidh opsionin e saktë!</p>
+    <p>Përdor lapsin tënd për të shkruar në kutitë e bardha ose zgjidh opsionin e saktë!</p>
 
     <div class="advanced-section">
       <h3>1. Lexo tekstin dhe kthe emrat.</h3>
@@ -197,10 +197,158 @@
 </div>
 
 <script>
-  // Regular Tests Data
+  // 1. Core Functions (Loaded first to prevent ReferenceErrors)
+  function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+  }
+
+  // App State Variables
+  let activeTestIndex = 0;
+  let currentQuestionIndex = 0;
+  let score = 0;
+
+  function startTest(index) {
+    activeTestIndex = index;
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById('quiz-title').innerText = testsData[index].name;
+    showScreen('screen-quiz');
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    const nextBtn = document.getElementById('next-btn');
+    nextBtn.style.display = 'none';
+    const test = testsData[activeTestIndex];
+    const currentQ = test.questions[currentQuestionIndex];
+    document.getElementById('progress').innerText = `Pyetja ${currentQuestionIndex + 1} nga ${test.questions.length}`;
+    document.getElementById('question').innerText = currentQ.q;
+    const optionsEl = document.getElementById('options');
+    optionsEl.innerHTML = '';
+    currentQ.options.forEach(option => {
+      const btn = document.createElement('button');
+      btn.innerText = option;
+      btn.onclick = () => selectAnswer(btn, option, currentQ.a);
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(selectedBtn, selectedText, correctText) {
+    const allBtns = document.getElementById('options').querySelectorAll('button');
+    allBtns.forEach(btn => btn.disabled = true);
+    if (selectedText === correctText) {
+      selectedBtn.classList.add('correct');
+      score++;
+    } else {
+      selectedBtn.classList.add('wrong');
+      allBtns.forEach(btn => { if (btn.innerText === correctText) btn.classList.add('correct'); });
+    }
+    document.getElementById('next-btn').style.display = 'block';
+  }
+
+  function nextQuestion() {
+    const test = testsData[activeTestIndex];
+    currentQuestionIndex++;
+    if (currentQuestionIndex < test.questions.length) { 
+      loadQuestion(); 
+    } else { 
+      showFinalScore(test.questions.length); 
+    }
+  }
+
+  function showFinalScore(total) {
+    document.getElementById('score-text').innerText = `${score} / ${total}`;
+    const msgEl = document.getElementById('score-message');
+    if(score === total) {
+      msgEl.innerHTML = "<b>Të lumtë Noar! Je i shkëlqyer! 🌟🏆</b>";
+    } else {
+      msgEl.innerHTML = "<b>Shumë mirë! Provo sërish për t'u bërë kampion! 👍</b>";
+    }
+    showScreen('screen-score');
+  }
+
+  function checkAdvancedTest() {
+    let advScore = 0;
+    const maxAdvScore = 10; 
+
+    if(document.getElementById('adv-q1-num').value === 'Njëjës') advScore++;
+    if(document.getElementById('adv-q1-gjin').value === 'Mashkullore') advScore++;
+    let kthe1 = document.getElementById('adv-q1-kthe').value.trim().toLowerCase();
+    if(kthe1 === 'mësuesja' || kthe1 === 'mesuesja') advScore++;
+
+    if(document.getElementById('adv-q2-num').value === 'Njëjës') advScore++;
+    if(document.getElementById('adv-q2-gjin').value === 'Mashkullore') advScore++;
+    let kthe2 = document.getElementById('adv-q2-kthe').value.trim().toLowerCase();
+    if(kthe2 === 'gjyshen' || kthe2 === 'gjyshja') advScore++;
+
+    let shum3 = document.getElementById('adv-q3-shumes').value.trim().toLowerCase();
+    if(shum3 === 'librat') advScore++;
+    if(document.getElementById('adv-q3-gjin').value === 'Mashkullore') advScore++;
+
+    let shum4 = document.getElementById('adv-q4-shumes').value.trim().toLowerCase();
+    if(shum4 === 'lulet' || shum4 === 'lulet') advScore++;
+    if(document.getElementById('adv-q4-gjin').value === 'Femërore') advScore++;
+
+    let openFilled = 0;
+    document.querySelectorAll('.open-input').forEach(inp => {
+      if(inp.value.trim().length >= 2) openFilled++;
+    });
+
+    document.getElementById('score-text').innerText = `${advScore} / ${maxAdvScore} Pikë`;
+    document.getElementById('score-message').innerHTML = `
+      <b style="color: #0288d1;">Keni marrë ${advScore} nga 10 pikë në pyetjet e rregullave!</b><br><br>
+      Për emrat konkretë dhe abstraktë, keni shkruar <b>${openFilled} fjalë</b> nga 6 të mundshme.<br><br>
+      <span style="color: #e65100; font-weight: bold;">⚠️ Tregoja prindit iPad-in tani, që ai të kontrollojë nëse emrat konkretë dhe abstraktë që shkruajte me laps janë të saktë!</span>
+    `;
+    
+    document.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
+    document.querySelectorAll('select').forEach(el => el.value = '');
+    
+    showScreen('screen-score');
+  }
+
+  // 2. Regular Tests Data
   const testsData = [
     {
       name: "Testi 1: Çfarë është Emri?",
       questions: [
         { q: "Cila fjalë tregon NJERI?", options: ["Lapsi", "Mësuesja", "Tavolina"], a: "Mësuesja" },
         { q: "Cila fjalë tregon KAFSHË?", options: ["Shtëpia", "Macja", "Gëzimi"], a: "Macja" },
+        { q: "Si shkruhet emri i një qyteti (Emër i Përveçëm)?", options: ["prishtina", "Prishtina", "PRISHTiNa"], a: "Prishtina" }
+      ]
+    },
+    {
+      name: "Testi 2: Gjej Mbiemrin",
+      questions: [
+        { q: "Cila fjalë tregon një CILËSI (Mbiemër)?", options: ["Libri", "Lexoj", "I mençur"], a: "I mençur" },
+        { q: "Gjej mbiemrin në fjalinë: 'Qielli është i kaltër.'", options: ["Qielli", "është", "i kaltër"], a: "i kaltër" },
+        { q: "Zgjidh mbiemrin e duhur: 'Mollë ______'", options: ["e kuqe", "i kuq", "të kuqe"], a: "e kuqe" }
+      ]
+    },
+    {
+      name: "Testi 3: Gjinia dhe Numri",
+      questions: [
+        { q: "Emri 'Vajza' është në gjininë:", options: ["Mashkullore", "Femërore"], a: "Femërore" },
+        { q: "Emri 'Librat' është në numrin:", options: ["Njëjës", "Shumës"], a: "Shumës" },
+        { q: "Numri Njëjës i fjalës 'Zogjtë' është:", options: ["Zog", "Zogu", "Zogut"], a: "Zogu" }
+      ]
+    }
+  ];
+
+  // 3. Setup Interface Once Page Loads Safely
+  window.onload = function() {
+    const testMenuContainer = document.getElementById('test-buttons-container');
+    if (testMenuContainer) {
+      testMenuContainer.innerHTML = ''; // Clear container to avoid duplicates
+      testsData.forEach((test, index) => {
+        const btn = document.createElement('button');
+        btn.innerText = test.name;
+        btn.onclick = () => startTest(index);
+        testMenuContainer.appendChild(btn);
+      });
+    }
+  };
+</script>
+</body>
+</html>
