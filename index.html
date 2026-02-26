@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Gjuha Shqipe - Klasa 3</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+      background-color: #f0f9ff; 
+      margin: 0; padding: 20px; 
+      display: flex; justify-content: center; align-items: flex-start; min-height: 100vh;
+      touch-action: manipulation;
+      color: #333;
+    }
+    #app { 
+      background: white; padding: 30px; border-radius: 24px; 
+      box-shadow: 0 12px 35px rgba(0,0,0,0.08); 
+      width: 100%; max-width: 700px; text-align: center;
+      margin-top: 20px;
+    }
+    h1 { color: #0277bd; font-size: 32px; margin-bottom: 10px; }
+    h2 { color: #01579b; font-size: 26px; }
+    p { font-size: 18px; color: #555; line-height: 1.5; }
+    
+    /* Buttons */
+    button { 
+      padding: 20px; font-size: 22px; border: 3px solid #0288d1; 
+      background-color: #fff; color: #0288d1; border-radius: 16px; 
+      cursor: pointer; transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+      width: 100%; margin-bottom: 15px; font-weight: bold;
+    }
+    button:active { transform: scale(0.97); }
+    .btn-primary { background-color: #0288d1; color: white; }
+    .btn-secondary { background-color: #ff9800; border-color: #ff9800; color: white; }
+    .btn-back { background-color: #e0e0e0; border-color: #e0e0e0; color: #333; margin-top: 20px; }
+    
+    /* Quiz Options */
+    .correct { background-color: #4caf50 !important; color: white !important; border-color: #4caf50 !important; }
+    .wrong { background-color: #f44336 !important; color: white !important; border-color: #f44336 !important; }
+    
+    /* Lessons */
+    .lesson-card {
+      background-color: #e1f5fe; border-left: 6px solid #0288d1;
+      padding: 20px; margin-bottom: 20px; border-radius: 12px;
+      text-align: left;
+    }
+    .lesson-card h3 { margin-top: 0; color: #01579b; font-size: 22px; }
+    .lesson-card p { font-size: 20px; margin-bottom: 0; }
+
+    #progress { color: #757575; font-size: 18px; margin-bottom: 15px; font-weight: bold; }
+    .question { font-size: 26px; margin-bottom: 30px; color: #222; font-weight: bold; }
+    
+    /* Screen Management */
+    .screen { display: none; }
+    .screen.active { display: block; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  
+  <div id="screen-home" class="screen active">
+    <h1>Përshëndetje, Noar! 👋</h1>
+    <p>Mirë se erdhe! Këtu mund të mësosh dhe të ushtrosh gramatikën e Gjuhës Shqipe për klasën e 3-të.</p>
+    <br>
+    <button class="btn-primary" onclick="showScreen('screen-lessons')">📖 Lexo Mësimet</button>
+    <button class="btn-secondary" onclick="showScreen('screen-tests')">✍️ Fillo Testet</button>
+  </div>
+
+  <div id="screen-lessons" class="screen">
+    <h2>Mësimet e Gramatikës</h2>
+    <div id="lessons-container">
+      <div class="lesson-card">
+        <h3>1. Emri</h3>
+        <p>Fjala që tregon njerëz, kafshë, sende, vende ose ndjenja quhet <b>EMËR</b>.<br><i>Shembuj:</i> djali, macja, lapsi, qyteti, gëzimi.</p>
+      </div>
+      <div class="lesson-card">
+        <h3>2. Mbiemri</h3>
+        <p>Fjala që tregon një cilësi (si është) të emrit quhet <b>MBIEMËR</b>.<br><i>Shembuj:</i> djalë <b>i mirë</b>, mollë <b>e kuqe</b>, qiell <b>i kaltër</b>.</p>
+      </div>
+      <div class="lesson-card">
+        <h3>3. Gjinia e Emrit</h3>
+        <p>Emrat kanë dy gjini kryesore:<br><b>Mashkullore:</b> mbarojnë me <b>-i</b> ose <b>-u</b> (lapsi, djaloshi, zogu).<br><b>Femërore:</b> mbarojnë me <b>-a</b> ose <b>-ja</b> (vajza, lulja, fletorja).</p>
+      </div>
+      <div class="lesson-card">
+        <h3>4. Numri i Emrit</h3>
+        <p><b>Njëjës:</b> tregon vetëm një (një laps, një lule).<br><b>Shumës:</b> tregon dy ose më shumë (disa lapsa, disa lule).</p>
+      </div>
+    </div>
+    <button class="btn-back" onclick="showScreen('screen-home')">⬅ Kthehu në Ballinë</button>
+  </div>
+
+  <div id="screen-tests" class="screen">
+    <h2>Zgjidh një Test</h2>
+    <div id="test-buttons-container"></div>
+    <button class="btn-back" onclick="showScreen('screen-home')">⬅ Kthehu në Ballinë</button>
+  </div>
+
+  <div id="screen-quiz" class="screen">
+    <h2 id="quiz-title">Testi</h2>
+    <div id="progress">Pyetja 1 / 5</div>
+    <div class="question" id="question">Loading...</div>
+    <div id="options"></div>
+    <button class="btn-secondary" id="next-btn" onclick="nextQuestion()" style="display:none; margin-top:25px;">Vazhdo te pyetja tjetër ➡</button>
+    <button class="btn-back" onclick="showScreen('screen-tests')">⬅ Ndërprit Testin</button>
+  </div>
+
+  <div id="screen-score" class="screen">
+    <h2>Testi Përfundoi!</h2>
+    <h1 id="score-text" style="font-size: 48px; margin: 20px 0;"></h1>
+    <p id="score-message" style="font-size: 24px; font-weight: bold;"></p>
+    <br>
+    <button class="btn-primary" onclick="showScreen('screen-tests')">Zgjidh një Test Tjetër</button>
+    <button class="btn-back" onclick="showScreen('screen-home')">Kthehu në Ballinë</button>
+  </div>
+
+</div>
+
+<script>
+  // Test Data
+  const testsData = [
+    {
+      name: "Testi 1: Çfarë është Emri?",
+      questions: [
+        { q: "Cila fjalë tregon NJERI?", options: ["Lapsi", "Mësuesja", "Tavolina"], a: "Mësuesja" },
+        { q: "Cila fjalë tregon KAFSHË?", options: ["Shtëpia", "Macja", "Gëzimi"], a: "Macja" },
+        { q: "Si shkruhet emri i një qyteti (Emër i Përveçëm)?", options: ["prishtina", "Prishtina", "PRISHTiNa"], a: "Prishtina" },
+        { q: "Cili grup ka vetëm EMRA?", options: ["lapsi, djali, mali", "këndoj, luaj, qesh", "i mirë, e bukur"], a: "lapsi, djali, mali" },
+        { q: "Fjala që tregon një SEND është:", options: ["Këndoj", "Libri", "I shpejtë"], a: "Libri" }
+      ]
+    },
+    {
+      name: "Testi 2: Gjej Mbiemrin",
+      questions: [
+        { q: "Cila fjalë tregon një CILËSI (Mbiemër)?", options: ["Libri", "Lexoj", "I mençur"], a: "I mençur" },
+        { q: "Gjej mbiemrin në fjalinë: 'Qielli është i kaltër.'", options: ["Qielli", "është", "i kaltër"], a: "i kaltër" },
+        { q: "Zgjidh mbiemrin e duhur: 'Mollë ______'", options: ["e kuqe", "i kuq", "të kuqe"], a: "e kuqe" },
+        { q: "Zgjidh mbiemrin e duhur: 'Djalë ______'", options: ["e zgjuar", "i zgjuar", "të zgjuar"], a: "i zgjuar" },
+        { q: "Cila nga këto fjalë NUK është mbiemër?", options: ["I ngadalshëm", "I lartë", "Vrapoj"], a: "Vrapoj" }
+      ]
+    },
+    {
+      name: "Testi 3: Gjinia Mashkullore dhe Femërore",
+      questions: [
+        { q: "Emri 'Lapsi' është në gjininë:", options: ["Mashkullore", "Femërore"], a: "Mashkullore" },
+        { q: "Emri 'Vajza' është në gjininë:", options: ["Mashkullore", "Femërore"], a: "Femërore" },
+        { q: "Cili nga këta emra është në gjininë FEMËRORE?", options: ["Miku", "Lulja", "Zogu"], a: "Lulja" },
+        { q: "Cili nga këta emra është në gjininë MASHKULLORE?", options: ["Fletorja", "Mami", "Gjyshi"], a: "Gjyshi" },
+        { q: "Si bën në gjininë femërore emri 'Mësuesi'?", options: ["Mësuesit", "Mësuesja", "Mësueseve"], a: "Mësuesja" }
+      ]
+    },
+    {
+      name: "Testi 4: Numri Njëjës dhe Shumës",
+      questions: [
+        { q: "Emri 'Librat' është në numrin:", options: ["Njëjës", "Shumës"], a: "Shumës" },
+        { q: "Cili emër tregon VETËM NJË (Njëjës)?", options: ["Lapsat", "Djemtë", "Lulja"], a: "Lulja" },
+        { q: "Si bën në shumës emri 'Vajza'?", options: ["Vajzat", "Vajzës", "Vajzë"], a: "Vajzat" },
+        { q: "Cili grup ka fjalë vetëm në numrin SHUMËS?", options: ["Libri, lapsi", "Librat, lapsat", "Libri, lapsat"], a: "Librat, lapsat" },
+        { q: "Numri Njëjës i fjalës 'Zogjtë' është:", options: ["Zog", "Zogu", "Zogut"], a: "Zogu" }
+      ]
+    },
+    {
+      name: "Testi 5: Antonimet dhe Sinonimet",
+      questions: [
+        { q: "Cili është ANTONIMI (e kundërta) e fjalës 'I ngadalshëm'?", options: ["I keq", "I shpejtë", "I vogël"], a: "I shpejtë" },
+        { q: "Antonimi i fjalës 'Natë' është:", options: ["Errësirë", "Hënë", "Ditë"], a: "Ditë" },
+        { q: "Cili është SINONIMI (kuptim i njëjtë) për fjalën 'Shikoj'?", options: ["Flas", "Eci", "Vështroj"], a: "Vështroj" },
+        { q: "Antonimi i fjalës 'I ftohtë' është:", options: ["I akullt", "I ngrohtë", "I bardhë"], a: "I ngrohtë" },
+        { q: "Sinonimi për fjalën 'Çun' është:", options: ["Burrë", "Djalë", "Vajzë"], a: "Djalë" }
+      ]
+    },
+    {
+      name: "Testi 6: Sfida e Mjeshtrit (Përzier)",
+      questions: [
+        { q: "Cili është emër i PËRVEÇËM?", options: ["qyteti", "Kosova", "vendi"], a: "Kosova" },
+        { q: "Në fjalinë 'Vajza e zgjuar lexon.', cila fjalë është MBIEMRI?", options: ["Vajza", "lexon", "e zgjuar"], a: "e zgjuar" },
+        { q: "Emri 'Fluturat' është në gjininë dhe numrin:", options: ["Femërore, Shumës", "Mashkullore, Njëjës", "Femërore, Njëjës"], a: "Femërore, Shumës" },
+        { q: "Cili nga këta është MBIEMËR i panyjshëm?", options: ["trim", "i mirë", "e zgjuar"], a: "trim" },
+        { q: "Si shkruhet saktë fjalia e mëposhtme?", options: ["noari lexon librin.", "Noari lexon librin.", "Noari Lexon Librin."], a: "Noari lexon librin." }
+      ]
+    }
+  ];
+
+  // App State
+  let activeTestIndex = 0;
+  let currentQuestionIndex = 0;
+  let score = 0;
+
+  // Initialize Tests Menu
+  const testMenuContainer = document.getElementById('test-buttons-container');
+  testsData.forEach((test, index) => {
+    const btn = document.createElement('button');
+    btn.innerText = test.name;
+    btn.onclick = () => startTest(index);
+    testMenuContainer.appendChild(btn);
+  });
+
+  // Screen Navigation
+  function showScreen(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+  }
+
+  function startTest(index) {
+    activeTestIndex = index;
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById('quiz-title').innerText = testsData[index].name;
+    showScreen('screen-quiz');
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    const nextBtn = document.getElementById('next-btn');
+    nextBtn.style.display = 'none';
+    
+    const test = testsData[activeTestIndex];
+    const currentQ = test.questions[currentQuestionIndex];
+    
+    document.getElementById('progress').innerText = `Pyetja ${currentQuestionIndex + 1} nga ${test.questions.length}`;
+    document.getElementById('question').innerText = currentQ.q;
+    
+    const optionsEl = document.getElementById('options');
+    optionsEl.innerHTML = '';
+    
+    currentQ.options.forEach(option => {
+      const btn = document.createElement('button');
+      btn.innerText = option;
+      btn.onclick = () => selectAnswer(btn, option, currentQ.a);
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function selectAnswer(selectedBtn, selectedText, correctText) {
+    // Disable all buttons to prevent multiple taps
+    const allBtns = document.getElementById('options').querySelectorAll('button');
+    allBtns.forEach(btn => btn.disabled = true);
+
+    if (selectedText === correctText) {
+      selectedBtn.classList.add('correct');
+      score++;
+    } else {
+      selectedBtn.classList.add('wrong');
+      // Show correct answer automatically
+      allBtns.forEach(btn => {
+        if (btn.innerText === correctText) btn.classList.add('correct');
+      });
+    }
+    document.getElementById('next-btn').style.display = 'block';
+  }
+
+  function nextQuestion() {
+    const test = testsData[activeTestIndex];
+    currentQuestionIndex++;
+    
+    if (currentQuestionIndex < test.questions.length) {
+      loadQuestion();
+    } else {
+      showFinalScore();
+    }
+  }
+
+  function showFinalScore() {
+    const test = testsData[activeTestIndex];
+    document.getElementById('score-text').innerText = `${score} / ${test.questions.length}`;
+    
+    const msgEl = document.getElementById('score-message');
+    if(score === test.questions.length) {
+      msgEl.innerText = "Të lumtë Noar! Je i shkëlqyer! 🌟🏆";
+      msgEl.style.color = "#4caf50";
+    } else if(score >= test.questions.length - 2) {
+      msgEl.innerText = "Shumë mirë! Rezultat mjaft i mirë! 👍";
+      msgEl.style.color = "#ff9800";
+    } else {
+      msgEl.innerText = "Mos u dorëzo! Lexo mësimet dhe provoje përsëri! 💪";
+      msgEl.style.color = "#f44336";
+    }
+    
+    showScreen('screen-score');
+  }
+</script>
+</body>
+</html>
