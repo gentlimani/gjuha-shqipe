@@ -57,7 +57,7 @@
       margin-bottom: 25px; text-align: left; border-left: 6px solid #9c27b0;
     }
     .advanced-section h3 { color: #6a1b9a; font-size: 20px; margin-top: 0; }
-    .text-box { background: #fff; padding: 15px; border-radius: 8px; font-size: 22px; color: #000; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+    .text-box { background: #fff; padding: 15px; border-radius: 8px; font-size: 22px; color: #000; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); line-height: 1.6; }
     .adv-row { margin-bottom: 15px; background: rgba(255,255,255,0.6); padding: 15px; border-radius: 8px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
     .adv-row label { font-weight: bold; font-size: 18px; width: 100%; margin-bottom: 5px; color: #333; }
     
@@ -83,7 +83,7 @@
   
   <div id="screen-home" class="screen active">
     <h1>Përshëndetje, Noar! 👋</h1>
-    <p>Mirë se erdhe në aplikacionin e Gjuhës Shqipe.</p>
+    <p>Mirë se erdhe! Këtu mund të mësosh dhe të ushtrosh gramatikën e Gjuhës Shqipe.</p>
     <br>
     <button class="btn-primary" onclick="showScreen('screen-lessons')">📖 Lexo Mësimet</button>
     <button class="btn-secondary" onclick="showScreen('screen-tests')">✍️ Fillo Testet</button>
@@ -93,19 +93,22 @@
     <h2>Mësimet e Gramatikës</h2>
     <div id="lessons-container">
       <div class="lesson-card">
-        <h3>1. Emri Konkret dhe Abstrakt</h3>
-        <p><b>Konkret:</b> Mund ta shohim dhe ta prekim (Tavolina, Lapsi, Molla).<br>
+        <h3>1. Emri (Konkret dhe Abstrakt)</h3>
+        <p>Fjala që tregon njerëz, kafshë, sende, vende ose ndjenja quhet <b>EMËR</b>.<br>
+        <b>Konkret:</b> Mund ta shohim dhe ta prekim (Tavolina, Lapsi, Molla, Qyteti).<br>
         <b>Abstrakt:</b> Nuk e prekim dot, tregon ndjenja ose mendime (Gëzimi, Frika, Dashuria).</p>
       </div>
       <div class="lesson-card">
-        <h3>2. Gjinia e Emrit</h3>
-        <p><b>Mashkullore:</b> mbarojnë me <b>-i</b> ose <b>-u</b> (Gjyshi, Zogu).<br>
-        <b>Femërore:</b> mbarojnë me <b>-a</b> ose <b>-ja</b> (Gjyshja, Vajza).</p>
+        <h3>2. Mbiemri</h3>
+        <p>Fjala që tregon një cilësi (si është) të emrit quhet <b>MBIEMËR</b>.<br><i>Shembuj:</i> djalë <b>i mirë</b>, mollë <b>e kuqe</b>, qiell <b>i kaltër</b>.</p>
       </div>
       <div class="lesson-card">
-        <h3>3. Numri i Emrit</h3>
-        <p><b>Njëjës:</b> tregon vetëm një (Libri).<br>
-        <b>Shumës:</b> tregon dy ose më shumë (Librat).</p>
+        <h3>3. Gjinia e Emrit</h3>
+        <p>Emrat kanë dy gjini kryesore:<br><b>Mashkullore:</b> mbarojnë me <b>-i</b> ose <b>-u</b> (lapsi, djaloshi, zogu).<br><b>Femërore:</b> mbarojnë me <b>-a</b> ose <b>-ja</b> (vajza, lulja, fletorja).</p>
+      </div>
+      <div class="lesson-card">
+        <h3>4. Numri i Emrit</h3>
+        <p><b>Njëjës:</b> tregon vetëm një (një laps, një lule).<br><b>Shumës:</b> tregon dy ose më shumë (disa lapsa, disa lule).</p>
       </div>
     </div>
     <button class="btn-back" onclick="showScreen('screen-home')">⬅ Kthehu në Ballinë</button>
@@ -125,20 +128,41 @@
 
     <div class="advanced-section">
       <h3>1. Lexo tekstin dhe kthe emrat.</h3>
-      <p class="text-box">"<b>Mësuesi</b> i lavdëroi nxënësit. Ai foli edhe me <b>gjyshin</b> e njërit prej tyre."</p>
+      <p class="text-box">"<b>Mësuesi</b> hyri në klasë me një libër në dorë. Ai përshëndeti nxënësit me buzëqeshje. Pas pak, në derë u shfaq <b>drejtori</b> i shkollës. Pranë tij qëndronte <b>djali</b> i ri. Ai ishte <b>nipi</b> i njërit prej nxënësve. <b>Gjyshi</b> i tij e kishte sjellë për vizitë."</p>
       
       <div class="adv-row">
-        <label>Fjala "Mësuesi":</label>
-        <select id="adv-q1-num"><option value="">--Numri--</option><option value="Njëjës">Njëjës</option><option value="Shumës">Shumës</option></select>
-        <select id="adv-q1-gjin"><option value="">--Gjinia--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
-        <input type="text" id="adv-q1-kthe" placeholder="Ktheje në Femërore...">
+        <label>1. Fjala "Mësuesi":</label>
+        <select id="adv-s1-q1-num"><option value="">--Numri--</option><option value="Njëjës">Njëjës</option><option value="Shumës">Shumës</option></select>
+        <select id="adv-s1-q1-gjin"><option value="">--Gjinia--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+        <input type="text" id="adv-s1-q1-kthe" placeholder="Ktheje në Femërore...">
       </div>
 
       <div class="adv-row">
-        <label>Fjala "Gjyshin" (Gjyshi):</label>
-        <select id="adv-q2-num"><option value="">--Numri--</option><option value="Njëjës">Njëjës</option><option value="Shumës">Shumës</option></select>
-        <select id="adv-q2-gjin"><option value="">--Gjinia--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
-        <input type="text" id="adv-q2-kthe" placeholder="Ktheje në Femërore...">
+        <label>2. Fjala "drejtori":</label>
+        <select id="adv-s1-q2-num"><option value="">--Numri--</option><option value="Njëjës">Njëjës</option><option value="Shumës">Shumës</option></select>
+        <select id="adv-s1-q2-gjin"><option value="">--Gjinia--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+        <input type="text" id="adv-s1-q2-kthe" placeholder="Ktheje në Femërore...">
+      </div>
+
+      <div class="adv-row">
+        <label>3. Fjala "djali":</label>
+        <select id="adv-s1-q3-num"><option value="">--Numri--</option><option value="Njëjës">Njëjës</option><option value="Shumës">Shumës</option></select>
+        <select id="adv-s1-q3-gjin"><option value="">--Gjinia--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+        <input type="text" id="adv-s1-q3-kthe" placeholder="Ktheje në Femërore...">
+      </div>
+
+      <div class="adv-row">
+        <label>4. Fjala "nipi":</label>
+        <select id="adv-s1-q4-num"><option value="">--Numri--</option><option value="Njëjës">Njëjës</option><option value="Shumës">Shumës</option></select>
+        <select id="adv-s1-q4-gjin"><option value="">--Gjinia--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+        <input type="text" id="adv-s1-q4-kthe" placeholder="Ktheje në Femërore...">
+      </div>
+
+      <div class="adv-row">
+        <label>5. Fjala "Gjyshi":</label>
+        <select id="adv-s1-q5-num"><option value="">--Numri--</option><option value="Njëjës">Njëjës</option><option value="Shumës">Shumës</option></select>
+        <select id="adv-s1-q5-gjin"><option value="">--Gjinia--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+        <input type="text" id="adv-s1-q5-kthe" placeholder="Ktheje në Femërore...">
       </div>
     </div>
 
@@ -146,13 +170,13 @@
       <h3>2. Shkruaj shumësin dhe trego gjininë.</h3>
       <div class="adv-row">
         <label>Fjala: Libri</label>
-        <input type="text" id="adv-q3-shumes" placeholder="Shkruaj shumësin...">
-        <select id="adv-q3-gjin"><option value="">--Gjinia në njëjës--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+        <input type="text" id="adv-s2-q1-shumes" placeholder="Shkruaj shumësin...">
+        <select id="adv-s2-q1-gjin"><option value="">--Gjinia në njëjës--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
       </div>
       <div class="adv-row">
         <label>Fjala: Lulja</label>
-        <input type="text" id="adv-q4-shumes" placeholder="Shkruaj shumësin...">
-        <select id="adv-q4-gjin"><option value="">--Gjinia në njëjës--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
+        <input type="text" id="adv-s2-q2-shumes" placeholder="Shkruaj shumësin...">
+        <select id="adv-s2-q2-gjin"><option value="">--Gjinia në njëjës--</option><option value="Mashkullore">Mashkullore</option><option value="Femërore">Femërore</option></select>
       </div>
     </div>
 
@@ -197,7 +221,7 @@
 </div>
 
 <script>
-  // 1. Core Functions (Loaded first to prevent ReferenceErrors)
+  // 1. Core Functions (Loaded first)
   function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(screenId).classList.add('active');
@@ -262,33 +286,59 @@
     const msgEl = document.getElementById('score-message');
     if(score === total) {
       msgEl.innerHTML = "<b>Të lumtë Noar! Je i shkëlqyer! 🌟🏆</b>";
+      msgEl.style.color = "#4caf50";
+    } else if (score >= total - 2) {
+      msgEl.innerHTML = "<b>Shumë mirë! Rezultat mjaft i mirë! 👍</b>";
+      msgEl.style.color = "#ff9800";
     } else {
-      msgEl.innerHTML = "<b>Shumë mirë! Provo sërish për t'u bërë kampion! 👍</b>";
+      msgEl.innerHTML = "<b>Mos u dorëzo! Lexo mësimet dhe provoje përsëri! 💪</b>";
+      msgEl.style.color = "#f44336";
     }
     showScreen('screen-score');
   }
 
   function checkAdvancedTest() {
     let advScore = 0;
-    const maxAdvScore = 10; 
+    const maxAdvScore = 19; // 5 fjalë x 3 pikë = 15. + 2 fjalë x 2 pikë = 4. Totali 19.
 
-    if(document.getElementById('adv-q1-num').value === 'Njëjës') advScore++;
-    if(document.getElementById('adv-q1-gjin').value === 'Mashkullore') advScore++;
-    let kthe1 = document.getElementById('adv-q1-kthe').value.trim().toLowerCase();
-    if(kthe1 === 'mësuesja' || kthe1 === 'mesuesja') advScore++;
+    // Fjala 1: Mësuesi
+    if(document.getElementById('adv-s1-q1-num').value === 'Njëjës') advScore++;
+    if(document.getElementById('adv-s1-q1-gjin').value === 'Mashkullore') advScore++;
+    let k1 = document.getElementById('adv-s1-q1-kthe').value.trim().toLowerCase();
+    if(k1 === 'mësuesja' || k1 === 'mesuesja') advScore++;
 
-    if(document.getElementById('adv-q2-num').value === 'Njëjës') advScore++;
-    if(document.getElementById('adv-q2-gjin').value === 'Mashkullore') advScore++;
-    let kthe2 = document.getElementById('adv-q2-kthe').value.trim().toLowerCase();
-    if(kthe2 === 'gjyshen' || kthe2 === 'gjyshja') advScore++;
+    // Fjala 2: drejtori
+    if(document.getElementById('adv-s1-q2-num').value === 'Njëjës') advScore++;
+    if(document.getElementById('adv-s1-q2-gjin').value === 'Mashkullore') advScore++;
+    let k2 = document.getElementById('adv-s1-q2-kthe').value.trim().toLowerCase();
+    if(k2 === 'drejtoresha' || k2 === 'drejtoreshe') advScore++;
 
-    let shum3 = document.getElementById('adv-q3-shumes').value.trim().toLowerCase();
-    if(shum3 === 'librat') advScore++;
-    if(document.getElementById('adv-q3-gjin').value === 'Mashkullore') advScore++;
+    // Fjala 3: djali
+    if(document.getElementById('adv-s1-q3-num').value === 'Njëjës') advScore++;
+    if(document.getElementById('adv-s1-q3-gjin').value === 'Mashkullore') advScore++;
+    let k3 = document.getElementById('adv-s1-q3-kthe').value.trim().toLowerCase();
+    if(k3 === 'vajza' || k3 === 'vajzë') advScore++;
 
-    let shum4 = document.getElementById('adv-q4-shumes').value.trim().toLowerCase();
-    if(shum4 === 'lulet' || shum4 === 'lulet') advScore++;
-    if(document.getElementById('adv-q4-gjin').value === 'Femërore') advScore++;
+    // Fjala 4: nipi
+    if(document.getElementById('adv-s1-q4-num').value === 'Njëjës') advScore++;
+    if(document.getElementById('adv-s1-q4-gjin').value === 'Mashkullore') advScore++;
+    let k4 = document.getElementById('adv-s1-q4-kthe').value.trim().toLowerCase();
+    if(k4 === 'mbesa' || k4 === 'mbese') advScore++;
+
+    // Fjala 5: Gjyshi
+    if(document.getElementById('adv-s1-q5-num').value === 'Njëjës') advScore++;
+    if(document.getElementById('adv-s1-q5-gjin').value === 'Mashkullore') advScore++;
+    let k5 = document.getElementById('adv-s1-q5-kthe').value.trim().toLowerCase();
+    if(k5 === 'gjyshja' || k5 === 'gjyshen') advScore++;
+
+    // Seksioni 2: Libri dhe Lulja
+    let shum1 = document.getElementById('adv-s2-q1-shumes').value.trim().toLowerCase();
+    if(shum1 === 'librat') advScore++;
+    if(document.getElementById('adv-s2-q1-gjin').value === 'Mashkullore') advScore++;
+
+    let shum2 = document.getElementById('adv-s2-q2-shumes').value.trim().toLowerCase();
+    if(shum2 === 'lulet') advScore++;
+    if(document.getElementById('adv-s2-q2-gjin').value === 'Femërore') advScore++;
 
     let openFilled = 0;
     document.querySelectorAll('.open-input').forEach(inp => {
@@ -297,7 +347,7 @@
 
     document.getElementById('score-text').innerText = `${advScore} / ${maxAdvScore} Pikë`;
     document.getElementById('score-message').innerHTML = `
-      <b style="color: #0288d1;">Keni marrë ${advScore} nga 10 pikë në pyetjet e rregullave!</b><br><br>
+      <b style="color: #0288d1;">Keni marrë ${advScore} nga ${maxAdvScore} pikë në pyetjet e rregullave!</b><br><br>
       Për emrat konkretë dhe abstraktë, keni shkruar <b>${openFilled} fjalë</b> nga 6 të mundshme.<br><br>
       <span style="color: #e65100; font-weight: bold;">⚠️ Tregoja prindit iPad-in tani, që ai të kontrollojë nëse emrat konkretë dhe abstraktë që shkruajte me laps janë të saktë!</span>
     `;
@@ -308,14 +358,16 @@
     showScreen('screen-score');
   }
 
-  // 2. Regular Tests Data
+  // 2. ALL 6 REGULAR TESTS ARE BACK
   const testsData = [
     {
       name: "Testi 1: Çfarë është Emri?",
       questions: [
         { q: "Cila fjalë tregon NJERI?", options: ["Lapsi", "Mësuesja", "Tavolina"], a: "Mësuesja" },
         { q: "Cila fjalë tregon KAFSHË?", options: ["Shtëpia", "Macja", "Gëzimi"], a: "Macja" },
-        { q: "Si shkruhet emri i një qyteti (Emër i Përveçëm)?", options: ["prishtina", "Prishtina", "PRISHTiNa"], a: "Prishtina" }
+        { q: "Si shkruhet emri i një qyteti (Emër i Përveçëm)?", options: ["prishtina", "Prishtina", "PRISHTiNa"], a: "Prishtina" },
+        { q: "Cili grup ka vetëm EMRA?", options: ["lapsi, djali, mali", "këndoj, luaj, qesh", "i mirë, e bukur"], a: "lapsi, djali, mali" },
+        { q: "Fjala që tregon një SEND është:", options: ["Këndoj", "Libri", "I shpejtë"], a: "Libri" }
       ]
     },
     {
@@ -323,15 +375,49 @@
       questions: [
         { q: "Cila fjalë tregon një CILËSI (Mbiemër)?", options: ["Libri", "Lexoj", "I mençur"], a: "I mençur" },
         { q: "Gjej mbiemrin në fjalinë: 'Qielli është i kaltër.'", options: ["Qielli", "është", "i kaltër"], a: "i kaltër" },
-        { q: "Zgjidh mbiemrin e duhur: 'Mollë ______'", options: ["e kuqe", "i kuq", "të kuqe"], a: "e kuqe" }
+        { q: "Zgjidh mbiemrin e duhur: 'Mollë ______'", options: ["e kuqe", "i kuq", "të kuqe"], a: "e kuqe" },
+        { q: "Zgjidh mbiemrin e duhur: 'Djalë ______'", options: ["e zgjuar", "i zgjuar", "të zgjuar"], a: "i zgjuar" },
+        { q: "Cila nga këto fjalë NUK është mbiemër?", options: ["I ngadalshëm", "I lartë", "Vrapoj"], a: "Vrapoj" }
       ]
     },
     {
-      name: "Testi 3: Gjinia dhe Numri",
+      name: "Testi 3: Gjinia Mashkullore dhe Femërore",
       questions: [
+        { q: "Emri 'Lapsi' është në gjininë:", options: ["Mashkullore", "Femërore"], a: "Mashkullore" },
         { q: "Emri 'Vajza' është në gjininë:", options: ["Mashkullore", "Femërore"], a: "Femërore" },
+        { q: "Cili nga këta emra është në gjininë FEMËRORE?", options: ["Miku", "Lulja", "Zogu"], a: "Lulja" },
+        { q: "Cili nga këta emra është në gjininë MASHKULLORE?", options: ["Fletorja", "Mami", "Gjyshi"], a: "Gjyshi" },
+        { q: "Si bën në gjininë femërore emri 'Mësuesi'?", options: ["Mësuesit", "Mësuesja", "Mësueseve"], a: "Mësuesja" }
+      ]
+    },
+    {
+      name: "Testi 4: Numri Njëjës dhe Shumës",
+      questions: [
         { q: "Emri 'Librat' është në numrin:", options: ["Njëjës", "Shumës"], a: "Shumës" },
+        { q: "Cili emër tregon VETËM NJË (Njëjës)?", options: ["Lapsat", "Djemtë", "Lulja"], a: "Lulja" },
+        { q: "Si bën në shumës emri 'Vajza'?", options: ["Vajzat", "Vajzës", "Vajzë"], a: "Vajzat" },
+        { q: "Cili grup ka fjalë vetëm në numrin SHUMËS?", options: ["Libri, lapsi", "Librat, lapsat", "Libri, lapsat"], a: "Librat, lapsat" },
         { q: "Numri Njëjës i fjalës 'Zogjtë' është:", options: ["Zog", "Zogu", "Zogut"], a: "Zogu" }
+      ]
+    },
+    {
+      name: "Testi 5: Antonimet dhe Sinonimet",
+      questions: [
+        { q: "Cili është ANTONIMI (e kundërta) e fjalës 'I ngadalshëm'?", options: ["I keq", "I shpejtë", "I vogël"], a: "I shpejtë" },
+        { q: "Antonimi i fjalës 'Natë' është:", options: ["Errësirë", "Hënë", "Ditë"], a: "Ditë" },
+        { q: "Cili është SINONIMI (kuptim i njëjtë) për fjalën 'Shikoj'?", options: ["Flas", "Eci", "Vështroj"], a: "Vështroj" },
+        { q: "Antonimi i fjalës 'I ftohtë' është:", options: ["I akullt", "I ngrohtë", "I bardhë"], a: "I ngrohtë" },
+        { q: "Sinonimi për fjalën 'Çun' është:", options: ["Burrë", "Djalë", "Vajzë"], a: "Djalë" }
+      ]
+    },
+    {
+      name: "Testi 6: Sfida e Mjeshtrit (Përzier)",
+      questions: [
+        { q: "Cili është emër i PËRVEÇËM?", options: ["qyteti", "Kosova", "vendi"], a: "Kosova" },
+        { q: "Në fjalinë 'Vajza e zgjuar lexon.', cila fjalë është MBIEMRI?", options: ["Vajza", "lexon", "e zgjuar"], a: "e zgjuar" },
+        { q: "Emri 'Fluturat' është në gjininë dhe numrin:", options: ["Femërore, Shumës", "Mashkullore, Njëjës", "Femërore, Njëjës"], a: "Femërore, Shumës" },
+        { q: "Cili nga këta është MBIEMËR i panyjshëm?", options: ["trim", "i mirë", "e zgjuar"], a: "trim" },
+        { q: "Si shkruhet saktë fjalia e mëposhtme?", options: ["noari lexon librin.", "Noari lexon librin.", "Noari Lexon Librin."], a: "Noari lexon librin." }
       ]
     }
   ];
